@@ -27,7 +27,7 @@ namespace :run do
 
   desc "gets tweets of a user"
   task :gettweets => :environment do
-    @tweets = USERHANDLE.user_timeline("ashishait")
+    @tweets = USERHANDLE.user_timeline(@selecteduser)
     # we now have array of twitter objects
     @tweets_json = @tweets.to_json()
     # we now get array of json objects
@@ -36,9 +36,29 @@ namespace :run do
     #
     @tweets_hash.each do |item|
       #puts "=>> #{item} --> #{@tweets_hash[item]}"
-      puts "tweet #{item['text']}"
-      store_tweet_to_file(item)
+      # puts "tweet #{item['text']}"
+      # store_tweet_to_file(item)      # stores tweet to file
+      store_stats_to_file(item)      # stores the details of tweets of a user
     end
+  end
+
+  desc "stores the stats of a user for his tweets"
+  task :calculatestats => :environment do
+      
+  end
+
+  desc "processes tweets of a user"
+  task :processtweets => :environment do
+    fd = File.open("tweets/#{@selecteduser}_tweets")
+    @tweets_array = []
+    while(line = fd.gets)
+      # @line = line.to_json()
+      # @tweet_rec = JSON.parse(@line)
+      @tweets_array.append(line)
+    end
+    puts "class of line = #{@tweets_array[0].class}"
+    # @tweets_hash = JSON.parse(@tweets_array)
+
   end
 
   desc "gets all the followers of a user"
@@ -76,10 +96,71 @@ namespace :run do
     #@user = selectuser
   end
   
+  def calc_word_count(tweet)
+    word_count = {}  # keeps track of count of words in a tweet
+    # extract the links
+
+    # update the string
+    # then split the string
+    words = tweet.split(/\W+/)   #/\W/ - A non-word character ([^a-zA-Z0-9_])]
+    # puts "length of array #{words.length}"
+    chopped_words = extract_word(words)
+    chopped_words.each do |word|
+      puts word
+    end
+  end
+
+=begin  
+  # extract word from the ambiguous word
+  #
+  def chop_word(word)
+    new_word = nil
+    (0..word.length).each do |index|
+      if(!word[index].match(/[:alnum:]/))
+        new_word = word[0, index-1]
+        break
+      end
+    end
+    return new_word
+  end
+
+  # returns a word if it has punctuations line Hello!!! --> Hello | Violla; --> Violla
+  def extract_word(word_array)
+    puts "class of word array is #{word_array.class}"
+    
+    (0..word_array.length).each do |index|
+      if(!word_array[index][-1].match(/[:alnum:]/))   # undefined method alpha for 'A'.alpha()
+        chopped_word = chop_word(word_array[index])
+        word_array[index] = chopped_word
+      end
+    end    
+    return word_array
+  end
+
+  class String
+    def alpha? # omits punctuations
+      !!match(/^[[:alnum:]]+$/)
+    end
+  end
+=end
+
+  # writes stats of a user to file
+  def store_stats_to_file(tweet_hash)
+    # count the number of words
+    @tweet_text = tweet_hash['text']
+    @word_count = calc_word_count(@tweet_text) # calculate word count in a tweet
+    # mentions
+    #
+    fd = File.open("tweets/#{@selected_user}_stats", "w+")  # opening in read write mode
+    if fd
+      
+    end
+  end
+
   # Writes files to a file username_tweets 
   def store_tweet_to_file(tweet_hash)
-    fd = File.new("#{@selecteduser}_tweets", "a")
-    if fd 
+    fd = File.open("tweets/#{@selecteduser}_tweets", "a")  # opening in append mode
+    if fd
        fd.syswrite("#{tweet_hash}\n")
     end
   end
