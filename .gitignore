@@ -1,5 +1,6 @@
 *.swp
 tmp/*
 # Logs and databases #
+log/*
 *.log
 
