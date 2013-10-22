@@ -87,7 +87,7 @@ namespace :run do
   task :displayuser do
     puts "User #{@user}"
   end
-
+  desc "all task will run any task given in array"
   task :all => [:gettweets]  
   # You don't need to supply a block of code to all task
   
@@ -96,17 +96,49 @@ namespace :run do
     #@user = selectuser
   end
   
+  def extract_link(tweet)
+    @start_index = tweet.index(/http:\/\/[\S]+/)
+    # puts "start index found at #{@start_index}"
+    if(@start_index)
+      @end_index = tweet[@start_index, tweet.length].index(/\s/)
+      if(!@end_index)
+        @end_index = tweet.length-1
+      end
+      # puts "end index found at #{@end_index}"
+    end
+    if(@start_index and @end_index)
+      # puts "Now modifying tweet"
+      if(@end_index == tweet.length-1)
+        tweet = tweet[0, @start_index]
+      else
+        tweet = tweet[0, @start_index-1] + tweet[@start_index+@end_index, tweet.length]
+      end
+    end
+    return tweet
+  end
+
   def calc_word_count(tweet)
     word_count = {}  # keeps track of count of words in a tweet
     # extract the links
-
-    # update the string
+    tweet = extract_link(tweet)
+    if(tweet.index(/http:\/\/[\S]+/))
+      tweet = extract_link(tweet)
+    end
     # then split the string
+    # puts tweet
     words = tweet.split(/\W+/)   #/\W/ - A non-word character ([^a-zA-Z0-9_])]
     # puts "length of array #{words.length}"
-    chopped_words = extract_word(words)
-    chopped_words.each do |word|
-      puts word
+    # chopped_words = extract_word(words)
+    words.each do |word|
+      if (word_count.include?(word))
+        word_count[word] = word_count[word] + 1
+      else
+        word_count[word] = 1
+      end
+    end
+    
+    word_count.each_key().each do |key|
+      puts "#{key} --> #{word_count[key]}"
     end
   end
 
