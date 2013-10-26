@@ -1,9 +1,10 @@
 # USERHANDLE is a Twitter::Client object defined in intializers 
 
 # change this to change the user
-@selecteduser = "ashishait"
+@selecteduser = "gautamrege"
 # @user is the instance variable that holds current user
 #
+@stopwords = ['a','able','about','across','after','all','almost','also','am','among','an','and','any','are','as','at','be','because','been','but','by','can','cannot','could','dear','did','do','does','either','else','ever','every','for','from','get','got','had','has','have','he','her','hers','him','his','how','however','i','if','in','into','is','it','its','just','least','let','like','likely','may','me','might','most','must','my','neither','no','nor','not','of','off','often','on','only','or','other','our','own','rather','said','say','says','she','should','since','so','some','than','that','the','their','them','then','there','these','they','this','tis','to','too','twas','us','wants','was','we','were','what','when','where','which','while','who','whom','why','will','with','would','yet','you','your']
 
 namespace :run do
   desc "Greets on terminal hello world"
@@ -34,17 +35,17 @@ namespace :run do
     @tweets_hash = JSON.parse(@tweets_json)
     # we now get array of hashes(converted from json)
     #
-    @tweets_hash.each do |item|
+    #@tweets_hash.each do |item|
       #puts "=>> #{item} --> #{@tweets_hash[item]}"
       # puts "tweet #{item['text']}"
       # store_tweet_to_file(item)      # stores tweet to file
-      store_stats_to_file(item)      # stores the details of tweets of a user
-    end
+      store_stats_to_file(@tweets_hash)      # stores the details of tweets of a user
+    #end
   end
 
   desc "stores the stats of a user for his tweets"
   task :calculatestats => :environment do
-      
+    
   end
 
   desc "processes tweets of a user"
@@ -96,6 +97,10 @@ namespace :run do
     #@user = selectuser
   end
   
+  
+
+
+  # removes the links from the tweets text
   def extract_link(tweet)
     @start_index = tweet.index(/http:\/\/[\S]+/)
     # puts "start index found at #{@start_index}"
@@ -117,8 +122,8 @@ namespace :run do
     return tweet
   end
 
-  def calc_word_count(tweet)
-    word_count = {}  # keeps track of count of words in a tweet
+  def calc_word_count(tweet, word_count)
+    # word_count keeps track of count of words in a tweet
     # extract the links
     tweet = extract_link(tweet)
     if(tweet.index(/http:\/\/[\S]+/))
@@ -130,16 +135,19 @@ namespace :run do
     # puts "length of array #{words.length}"
     # chopped_words = extract_word(words)
     words.each do |word|
-      if (word_count.include?(word))
-        word_count[word] = word_count[word] + 1
-      else
-        word_count[word] = 1
+      if(!@stopwords.include?(word))
+        if (word_count.include?(word))
+          word_count[word] = word_count[word] + 1
+        else
+          word_count[word] = 1
+        end
       end
     end
     
-    word_count.each_key().each do |key|
-      puts "#{key} --> #{word_count[key]}"
-    end
+    #word_count.each_key().each do |key|
+    #  puts "#{key} --> #{word_count[key]}"
+    #end
+    return word_count  # returns a hash of word => word count
   end
 
 =begin  
@@ -177,15 +185,18 @@ namespace :run do
 =end
 
   # writes stats of a user to file
-  def store_stats_to_file(tweet_hash)
+  def store_stats_to_file(tweet_array)
     # count the number of words
-    @tweet_text = tweet_hash['text']
-    @word_count = calc_word_count(@tweet_text) # calculate word count in a tweet
-    # mentions
-    #
-    fd = File.open("tweets/#{@selected_user}_stats", "w+")  # opening in read write mode
-    if fd
+    @word_count = {}
+    # array of hashes
+    tweet_array.each do |tweet|
+      @tweet_text = tweet['text']
+      @word_count = calc_word_count(@tweet_text, @word_count) # calculate word count in a tweet 
+    end
+    #fd = File.open("tweets/#{@selected_user}_stats", "w+")  # opening in read write mode
       
+    @word_count.each_key().each do |key|
+      puts "--> #{key} = #{@word_count[key]}"
     end
   end
 

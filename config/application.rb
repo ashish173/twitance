@@ -1,6 +1,10 @@
 require File.expand_path('../boot', __FILE__)
 
+
+# removed by comrade
 require 'rails/all'
+
+#require "action_controller/"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
