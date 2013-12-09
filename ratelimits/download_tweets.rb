@@ -24,7 +24,7 @@ TweetStream::Client.new.track(@index, "rails", "rubyonrails", "rubygem", "#ruby"
   puts "Id: #{status.id}" 
   puts "Location: #{status.user.location}"
 
-  file = File.new("new_tweets_ruby1","a+")
+  file = File.new("new_tweets_ruby3","a+")
   # put "file descriptpr: #{file}"
   @tweet_json = status.to_json()
   if file 
