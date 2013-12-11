@@ -45,22 +45,6 @@ namespace :database do
 				p "made a new record"
 			end
 		end	
-
-=begin			
-
-			if(User.find_create(user_id: @user)) 
-				p "Found in the date base"
-			else
-				p "user id #{@user}"
-				@u = User.new(user_id: @user)
-				@u.tweets.new(created_at: my_hash['created_at'], text: my_hash['text'], )
-      			@u.save!
-				p "tweet entered in mongodb"
-			end
-=end			
-      #@alltweets = Tweet.all()
-      #p "class of alltweets #{@alltweets.class}"
-		
 	end
 
 	desc "create and save in database"
