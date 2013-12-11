@@ -16,11 +16,13 @@ namespace :database do
 			line=line.chomp().chop()
 			my_hash = JSON.parse(line)
 			
-			p my_hash['user']['screen_name']
-			p my_hash.class
-			# We have this hash now this can be used to insert data.
-			#Tweet.create(created_at: my_hash['created_at'], text: my_hash['text'] )
-			# 
+			#p my_hash['user']['screen_name']
+			#p my_hash.class
+			@tweet = Tweet.new(created_at: my_hash['created_at'], text: my_hash['text'])
+      @tweet.save!
+			p "tweet entered in mongodb"
+      @alltweets = Tweet.all()
+      p "class of alltweets #{@alltweets.class}"
 		end
 	end
 
