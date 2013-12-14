@@ -26,9 +26,9 @@ end
 
 =end
 # opens tweet files and extract a tweet
-namespace :database do
+namespace :tweet do
 	desc "reads a tweet from file"
-	task :readtweet => :environment do
+	task :read => :environment do
 		# fd = File.open(@pathtofile, "r") # open in read mode
 		File.readlines(@pathtofile).each do |line|
 			line=line.chomp().chop()
@@ -47,11 +47,29 @@ namespace :database do
 		end	
 	end
 
-	desc "create and save in database"
-	task :insertindb => :environment do
+	desc "insert into in database"
+	task :insert => :environment do
+		p ""
+	end
+
+	desc "fetch all tweets of a user"
+	task :fromuser => :environmnet do
 
 	end
 
+	desc "match tweet against the seed file of words concering an interest"
+	task :match => :environment do
+
+	end
+
+	desc "adds user to temp list of category"
+	task :adduser => :environment do
+
+	end
+
+	task :all => [:read, :insert]
+	# parsing of account of users from the temp list of category
+	# in another file parse.rake
 end
 
 # create a mongoid object

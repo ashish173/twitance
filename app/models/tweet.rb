@@ -15,5 +15,5 @@ class Tweet
   field :retweet_count, type: Integer
   field :lang, type: String
   
-  embedded_in :user        # has many to one with user model
+  belongs_to :user  
 end

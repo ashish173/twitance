@@ -12,5 +12,5 @@ class User
   field :lang, type: String
   field :description, type: String
   
-  embeds_many :tweets    # has one to many relation with tweet model
+  has_many :tweets
 end
