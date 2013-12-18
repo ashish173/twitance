@@ -10,7 +10,7 @@ Tire.index 'tweetindex' do
     :tweetindex => {
       :properties => {
         :id  => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
-        :tweet => { :type => 'string', :analyzer => 'snowball' },
+        :tweet => { :type => 'string', :analyzer => '' },
         :created_at => {:type => 'date'},
         :location => {:type => 'string', :analyzer => 'keyword' },
         :user_id => {:type => 'string'}
