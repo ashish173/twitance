@@ -27,12 +27,10 @@ namespace :tire do
 	
 
 
-
 	task :view => :environment do
-		  
 	  s = Tire.search 'twitance' do
       		query do 
-      			string ('text:ruby*')
+     			string ('text:ruby*')
       		end
       		
       		facet 'tags' do
@@ -65,7 +63,7 @@ namespace :tire do
 										#:urls => {:type => 'Array.new(10) { |i|  }'},
 										#:mentions_id => {:type => 'Array.new(10) { |i|  }'},
 										#:favorite_count => {:type => 'Integer'},
-										#:retweet_count => {:type => 'Integer'},
+										#:retweet_count => {:type => 'Intege'},
 										#:lang => {:type =>'String'}
 									}
 								}
@@ -75,17 +73,17 @@ namespace :tire do
 
 
 	task :read => :environment do
-		twitance={}
 		File.readlines(@pathtofile).each do |line|
 			line=line.chomp().chop()
 			tweet_hash=JSON.parse(line)
-			twitance[:tweet_id => tweet_hash['id_str'],:text => tweet_hash['text']]			
-		end
-		Tire.index 'twitance' do
+			twitance=[{:tweet_id => tweet_hash['id_str'],:text => tweet_hash['text']}]		
+			Tire.index 'twitance' do
 				import twitance
 			end
+		end
 	end
 
-	task :all => [:view, :insert, :create]
+	task :manual => [:view,:read,:create]
+	#task :auto => [:create,:insert,:view]
 end
 	
