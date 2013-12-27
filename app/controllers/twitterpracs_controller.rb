@@ -1,4 +1,6 @@
 class TwitterpracsController < ApplicationController
+	require 'twitter'
+
 	def new
 		render "new"
 	end
@@ -69,5 +71,40 @@ class TwitterpracsController < ApplicationController
 		else
 			p "try hasd "
 		end		
-end
+	end
+	#hitting the twitter
+
+	def download(q)
+		@client = Twitter::REST::Client.new do |config|
+  			config.consumer_key        = "kgIpenTTZcD7wD9dnOOxPQ"
+  			config.consumer_secret     = "hHWxrOaZ3e1P9q44q6t0tNLvHZXucKETg2CGuchsmRc"
+			config.access_token        = "838203445-AOC6HFdUCZfAswXKVQQpdyCJImHoloyFVr1qZVSd"
+  			config.access_token_secret = "v93GUHb2zoR8bNYzrN81Ns36hzaC8KgBTYGO3cGM"
+  		end	
+  		options = {:count => 10}  
+		@obj = @client.search(@q, options)
+
+		#creating arrays of username, tweets
+		results = []
+		#@obj = @obj.to_a
+		@obj.each do |t|
+			d = {}
+			d['handle'] = t.user.screen_name
+			d['tweet'] = t.text
+			results.push(d)
+		end
+		#indexing tweets
+		Tire.index 'twitterpracs' do
+			import results
+		end
+
+		return @obj
+	end
+
+	def search
+		@q = params[:input]
+		if @q
+			@obj = download(@q)	
+		end
+	end
 end

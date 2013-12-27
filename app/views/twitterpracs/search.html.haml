@@ -1,0 +1,13 @@
+%body
+ %span{:class => "label label-default"}You search for
+ = @q
+ %br
+
+
+
+ = form_for :tweet, url: '/' do |f|
+  %label{:class => "label label-danger"}Twitance
+  %br
+  %input{:name=> "input",:type => :text, :placeholder => "start by typing anything"}
+  %br
+  %input{:type => :submit}
