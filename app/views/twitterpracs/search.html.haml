@@ -1,8 +1,9 @@
 %body
  %span{:class => "label label-default"}You search for
- = @q
- %br
+ 
 
+ %br
+ 
 
 
  = form_for :tweet, url: '/' do |f|
@@ -11,3 +12,5 @@
   %input{:name=> "input",:type => :text, :placeholder => "start by typing anything"}
   %br
   %input{:type => :submit}
+
+  %a{:href => "/facets"}facets count

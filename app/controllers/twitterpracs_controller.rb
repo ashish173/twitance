@@ -1,6 +1,6 @@
 class TwitterpracsController < ApplicationController
 	require 'twitter'
-
+	require 'tire'
 	def new
 		render "new"
 	end
@@ -23,13 +23,19 @@ class TwitterpracsController < ApplicationController
 			p "does'nt exists"
 
 		end
+=begin
 		@sea = Twitterprac.search do 
 			facet 'word', :global => true do
         		terms :tweet
       		end
 			#facet('word') {}
 		end
-
+=end
+	@sea = Tire.search 'twitterpracs' do
+		    facet 'word', :global => true do
+        		terms :tweet
+      		end
+	end
 		
 		@out = Twitterprac.search do
 			query{string 'ruby'}#, fuzziness: 0.5} 
@@ -81,7 +87,7 @@ class TwitterpracsController < ApplicationController
 			config.access_token        = "838203445-AOC6HFdUCZfAswXKVQQpdyCJImHoloyFVr1qZVSd"
   			config.access_token_secret = "v93GUHb2zoR8bNYzrN81Ns36hzaC8KgBTYGO3cGM"
   		end	
-  		options = {:count => 10}  
+  		options = {:count => 100}  
 		@obj = @client.search(@q, options)
 
 		#creating arrays of username, tweets
@@ -106,5 +112,6 @@ class TwitterpracsController < ApplicationController
 		if @q
 			@obj = download(@q)	
 		end
+		
 	end
 end

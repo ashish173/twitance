@@ -2,7 +2,7 @@
 %strong{:class => "label label-danger"} word count
 %table{:cellpadding => "10"}
 
-- @sea.facets['word']["terms"].each do |f|
+- @sea.results.facets['word']["terms"].each do |f|
 	- type = f['term']  
 	%br
 	%tr
