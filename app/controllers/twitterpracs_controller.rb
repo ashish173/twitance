@@ -16,13 +16,14 @@ class TwitterpracsController < ApplicationController
 
 	def facets
 		@par = params[:term]
-		p @par
+		#p @par
 		if @par 
 			p "oh you make it"
 		else
 			p "does'nt exists"
 
 		end
+
 =begin
 		@sea = Twitterprac.search do 
 			facet 'word', :global => true do
@@ -31,11 +32,11 @@ class TwitterpracsController < ApplicationController
 			#facet('word') {}
 		end
 =end
-	@sea = Tire.search 'twitterpracs' do
-		    facet 'word', :global => true do
-        		terms :tweet
-      		end
-	end
+		@sea = Tire.search 'twitterpracs' do
+			    facet 'word', :global => true do
+        			terms :tweet
+      			end
+		end
 		
 		@out = Twitterprac.search do
 			query{string 'ruby'}#, fuzziness: 0.5} 
@@ -47,7 +48,7 @@ class TwitterpracsController < ApplicationController
 			@out.results.each do |f|
 				#p f['tweet']
 			end
-			p @out
+			#p @out
 		else
 			p "try hard "
 		end		
@@ -87,7 +88,7 @@ class TwitterpracsController < ApplicationController
 			config.access_token        = "838203445-AOC6HFdUCZfAswXKVQQpdyCJImHoloyFVr1qZVSd"
   			config.access_token_secret = "v93GUHb2zoR8bNYzrN81Ns36hzaC8KgBTYGO3cGM"
   		end	
-  		options = {:count => 100}  
+  		options = {:count => "100"}  
 		@obj = @client.search(@q, options)
 
 		#creating arrays of username, tweets
@@ -101,6 +102,7 @@ class TwitterpracsController < ApplicationController
 		end
 		#indexing tweets
 		Tire.index 'twitterpracs' do
+			delete
 			import results
 		end
 
@@ -110,8 +112,12 @@ class TwitterpracsController < ApplicationController
 	def search
 		@q = params[:input]
 		if @q
+			p "=========================================================="
+			p @q
 			@obj = download(@q)	
+			redirect_to '/facets' 
 		end
-		
+	#	redirect_to '/facets' 
+
 	end
 end
