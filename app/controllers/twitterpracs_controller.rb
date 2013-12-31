@@ -38,6 +38,7 @@ class TwitterpracsController < ApplicationController
       			end
 		end
 		
+
 		@out = Twitterprac.search do
 			query{string 'ruby'}#, fuzziness: 0.5} 
 		end
@@ -104,6 +105,7 @@ class TwitterpracsController < ApplicationController
 		Tire.index 'twitterpracs' do
 			delete
 			import results
+			refresh
 		end
 
 		return @obj
