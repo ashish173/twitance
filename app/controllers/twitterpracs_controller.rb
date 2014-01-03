@@ -97,13 +97,27 @@ class TwitterpracsController < ApplicationController
 		#@obj = @obj.to_a
 		@obj.each do |t|
 			d = {}
+			d['type'] = "twitterprac"
 			d['handle'] = t.user.screen_name
 			d['tweet'] = t.text
 			results.push(d)
 		end
 		#indexing tweets
 		Tire.index 'twitterpracs' do
-			delete
+      		delete
+
+      		create :mappings => {
+        		:twitterprac => {
+          		:properties => {    
+            		:handle     => { :type => 'string'},
+            		:tweet  => { :type => 'string', :analyzer => 'snowball'}
+          }
+        }
+      }
+    end
+
+		Tire.index 'twitterpracs' do
+			
 			import results
 			refresh
 		end
@@ -114,12 +128,9 @@ class TwitterpracsController < ApplicationController
 	def search
 		@q = params[:input]
 		if @q
-			p "=========================================================="
 			p @q
 			@obj = download(@q)	
 			redirect_to '/facets' 
 		end
-	#	redirect_to '/facets' 
-
 	end
 end
