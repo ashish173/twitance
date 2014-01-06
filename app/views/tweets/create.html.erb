@@ -1,0 +1,15 @@
+<html>
+
+<body>
+  <%# @s.results.facets['wordcount']['terms'].each do |f| %>
+    <%#= f['term'] + " ==> " + f['count'] %>
+    <%# end %>
+    <% s = @s%>
+  <% if s %>
+    <p>this exists</p>
+    <% s.results.facets.each do |f| %>
+      <%= f %>
+  <% end %>
+  <% end %>
+</body>
+</html>
