@@ -1,0 +1,20 @@
+		
+%strong{:class => "label label-danger"} word count
+%table{:cellpadding => "10"}
+
+- @sea.results.facets['word']["terms"].each do |f|
+	- type = f['term']  
+	%br
+	%tr
+		%td
+		%strong{:class => "btn btn-warning"}
+			= f['term'] 
+		%span{:class => "btn btn-warning",  :id => type, :onclick => "rohit(id); return false"  }X
+		%td
+		%strong{:margin =>"20"}     
+			= f['count']
+	%br
+- @out.results.each do |o|
+	= o['tweet']
+
+%br

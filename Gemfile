@@ -7,7 +7,7 @@ gem 'rails', '3.2.13'
 
 
 gem 'sqlite3'
-gem 'twitter'
+gem 'twitter', '~> 5.0'
 gem 'haml'
 gem 'mongoid'
 gem 'bson_ext'
