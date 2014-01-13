@@ -6,6 +6,8 @@ class TwitterpracsController < ApplicationController
 	end
 
 
+	def sea
+	end
 	def create 
 		@tweet = Twitterprac.new(params[:tweet])
 		@tweet.save
@@ -89,7 +91,7 @@ class TwitterpracsController < ApplicationController
 			config.access_token        = "838203445-AOC6HFdUCZfAswXKVQQpdyCJImHoloyFVr1qZVSd"
   			config.access_token_secret = "v93GUHb2zoR8bNYzrN81Ns36hzaC8KgBTYGO3cGM"
   		end	
-  		options = {:count => "100"}  
+  		options = {:count => "100", :lang=>"en"}  
 		@obj = @client.search(@q, options)
 
 		#creating arrays of username, tweets
@@ -106,11 +108,32 @@ class TwitterpracsController < ApplicationController
 		Tire.index 'twitterpracs' do
       		delete
 
+      		 create :settings => {
+     			:index => {
+        			:analysis => {
+          				:filter => {
+          					:stop_filter => {
+          						:type => "stop",
+          						:stopwords => ["you","me", "i" ,"http", "t.co"]
+          					}
+          				}
+      				},
+      				:analyzer => {
+      					:my_analyzer => {
+      						:type  		=> "snowball",
+      						:filter 	=> "stop_filter",
+      						:tokenizer 	=> "snowball"
+      					}
+      				}
+
+    			}
+    		}
+
       		create :mappings => {
         		:twitterprac => {
           		:properties => {    
             		:handle     => { :type => 'string'},
-            		:tweet  => { :type => 'string', :analyzer => 'snowball'}
+            		:tweet  => { :type => 'string', :analyzer => 'my_analyzer'}
           }
         }
       }

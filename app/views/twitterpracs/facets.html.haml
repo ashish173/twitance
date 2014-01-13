@@ -14,7 +14,10 @@
 		%strong{:margin =>"20"}     
 			= f['count']
 	%br
-- @out.results.each do |o|
-	= o['tweet']
-
+%span{:position => "relative" , :height => '20', :width => "30"}
+%br
+	%strong{:class => "label label-default"} User List
+	- @out.results.each do |o|
+		= o['handle']
+		%br
 %br
