@@ -1,23 +1,29 @@
-		
-%strong{:class => "label label-danger"} word count
+.col-md-2
+	.block.block-themed.themed-leaf
+		.block-title
+			%h4 Word Count
+.col-md-12
 %table{:cellpadding => "10"}
-
+%br
 - @sea.results.facets['word']["terms"].each do |f|
 	- type = f['term']  
 	%br
 	%tr
 		%td
-		%strong{:class => "btn btn-warning"}
-			= f['term'] 
-		%span{:class => "btn btn-warning",  :id => type, :onclick => "rohit(id); return false"  }X
-		%td
-		%strong{:margin =>"20"}     
-			= f['count']
+		.col-md-4
+			%div
+				%code 
+					= f['term']
+				%code{ :id => type, :onclick => "rohit(id); return false"  }
+					X 
+				%td
+				%strong{:margin =>"20"}     
+				= f['count']
 	%br
-%span{:position => "relative" , :height => '20', :width => "30"}
-%br
-	%strong{:class => "label label-default"} User List
-	- @out.results.each do |o|
-		= o['handle']
-		%br
-%br
+//%span{:position => "relative" , :height => '20', :width => "30"}
+//%br
+//	%strong{:class => "label label-default"} User List
+//	- @out.results.each do |o|
+//		= o['handle']
+//		%br
+//%br

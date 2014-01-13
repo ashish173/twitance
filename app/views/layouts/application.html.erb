@@ -44,13 +44,15 @@
 
         <!-- Modernizr (Browser feature detection library) & Respond.js (Enable responsive CSS code on browsers that don't support it) -->
         <script src="assets/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="assets/application.js"></script>
     </head>
 <body>
     <div id="page-container" class="full-width">
         <header class="navbar navbar-inverse">
-            <div class="col-sm-4 hidden-xs">
+
+            <!--<div class="col-sm-4 hidden-xs">
                         <ul class="navbar-nav-custom pull-left">
-                            <!-- Desktop Button (Visible only on desktop resolutions) -->
+                            <!-- Desktop Button (Visible only on desktop resolutions) --
                             <li class="visible-md visible-lg">
                                 <a href="javascript:void(0)" id="toggle-side-content">
                                     <i class="icon-reorder"></i>
@@ -58,11 +60,11 @@
                             </li>
                             <!-- END Desktop Button -->
 
-                            <!-- Divider -->
+                            <!-- Divider --
                             <li class="divider-vertical"></li>
                         </ul>
-            </div>
-            <div class="col-sm-4 text-center">
+            </div>-->
+            <div class="col-sm-12 text-center">
                         <!-- Top search -->
                        <!-- <form id="top-search" class="pull-left" action="page_ready_search_results.html" method="post">
                             <input type="text" id="search-term" class="form-control" name="search-term" placeholder="Search..">
@@ -73,6 +75,7 @@
                         <a href="index.html" class="navbar-brand">
                             <img src="assets/template/image.png" alt="logo">
                         </a>
+                        
                         <!-- END Logo -->
 
                         <!-- Loading Indicator, Used for demostrating how loading of notifications could happen, check main.js - uiDemo()
@@ -215,12 +218,12 @@
                     </div>
             </div>
         </header>
-        <aside id="page-sidebar" class="collapse navbar-collapse navbar-main-collapse">
+        <!--<aside id="page-sidebar" class="collapse navbar-collapse navbar-main-collapse">
                 <!--
                 Wrapper for scrolling functionality
                 Used only if the .sticky class added above. You can remove it and you will have a sticky sidebar
                 without scrolling enabled when you set the sidebar to be sticky
-                -->
+                
                 <div class="side-scrollable">
                     <!-- Mini Profile --
                     <div class="mini-profile">
@@ -257,7 +260,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="side-tab-menu">
-                                <!-- Primary Navigation -->
+                                <!-- Primary Navigation --
                                 <nav id="primary-nav">
                                     <ul>
                                         <li>
@@ -494,13 +497,18 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END Sidebar Tabs -->
+                    <!-- END Sidebar Tabs --
                 </div>
-                <!-- END Wrapper for scrolling functionality -->
-            </aside>
-            <div id="pre-page-content">
-                <%= yield %>           
-            </div>
+                <!-- END Wrapper for scrolling functionality --
+            </aside>-->
+            <div class="col-md-12">
+                        <div class="block block-themed themed-fire">
+
+                            <%= yield %>   
+                        </div>
+                    </div>
+
+        
     </div>
          <!-- Excanvas for Flot (Charts plugin) support on IE8 -->
         <!--[if lte IE 8]><script src="js/helpers/excanvas.min.js"></script><![endif]-->
