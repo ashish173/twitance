@@ -1,6 +1,6 @@
 require "twitter"
-
-@client = Twitter::REST::Client.new do |config|
+require "tire"
+client = Twitter::REST::Client.new do |config|
   config.consumer_key        = "YPC3v1fzpnJHeSfTNH2ZhQ"
   config.consumer_secret     = "bo6Or0GpaymfVccdaSliG8OGYHr4aYEtshZu4W2lCY"
   config.access_token        = "283990956-4SEvREjo1CmUWK4Lb9k8Kp2U5FkAMaVki46IxOAS"
@@ -24,8 +24,45 @@ end
 =end
 
 
+search_term = ARGV[0]
+# p search_term.class
+
 # fetch_all_tweets("ashishait")
 #
-options = {:count => 200}  
-test = @client.user_timeline("ashishait", options)
-p "The result is #{test.length}" 
+options = {:count => 100}  
+# test = @client.user_timeline("ashishait", options)
+test = client.search(search_term, options)
+
+
+
+result_array = []
+
+test.to_a.each do |result|
+  tweet_hash={}
+  tweet_hash[:text] = result.text
+  result_array.push(tweet_hash)
+end
+
+
+Tire.index 'tweetindex' do
+  import result_array
+end
+
+
+# search_t = "#{@search_term}"
+
+s = Tire.search 'tweetindex' do
+  query do 
+    string search_term
+  end
+
+  facet 'wordcount' do
+    terms :text
+  end
+end
+
+s.results.facets['wordcount']['terms'].each do |f|
+  puts "#{f['term']} ==> #{f['count']}"
+end
+
+
