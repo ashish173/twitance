@@ -186,7 +186,7 @@ body.login .form-group {
 */
 
 body {
-    background: #393939 url('../img/template/bg.png') top left repeat;
+    background: #fff;
     color: #333;
     line-height: 1.6;
     font-size: 13px;
@@ -209,7 +209,7 @@ body {
     width: 201px;
     display: block;
     position: absolute;
-    border-right: 1px solid #333;
+    border-right: 0px solid #333;
 }
 
 #pre-page-content {
@@ -462,7 +462,7 @@ footer {
     list-style: none;
     margin: 0;
     padding: 0;
-    background-color: #595959;
+    background-color: #F2F4F7;
 }
 
 #primary-nav li a {
@@ -574,7 +574,7 @@ footer {
 
 .block-title {
     margin: 0;
-    background-color: #eee;
+    background-color: #BDF595;
 }
 
 .block-title code {
@@ -622,8 +622,9 @@ footer {
 
 .block-content {
     margin: 0;
+    background: #fff; 
     padding: 20px 20px 5px;
-    border: 2px solid #eee;
+    border: 0px solid #333;
     border-top: none;
 }
 
@@ -706,7 +707,6 @@ footer {
     color: #333;
     background-color: #d4d4d4;
 }
-
 .block-tabs > .nav-tabs > .active > a:hover,
 .block-tabs > .nav-tabs > .active > a:focus {
     background-color: #fff;
@@ -803,7 +803,7 @@ footer {
 
 /* Sidebar Tabs */
 .sidebar-tabs {
-    background-color: #696969;
+    background-color: #e74c3c;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -830,18 +830,18 @@ footer {
 .sidebar-tabs > li > a:hover,
 .sidebar-tabs > li > a:focus,
 .sidebar-tabs > li > a:active {
-    color: #fff !important;
+    color: #333 !important;
     background-color: #777;
     text-decoration: none !important;
     outline: none;
 }
 
 .sidebar-tabs > li.active > a {
-    background-color: #595959;
+    background-color: #e74c3c;
 }
 
 .sidebar-tabs-con .tab-content {
-    background-color: #595959;
+    background-color: #F2F4F7;
     padding: 20px 0 10px;
     margin: 0;
     border: none;
@@ -861,7 +861,7 @@ footer {
     margin: 5px -10px;
     padding: 9px 10px 8px;
     font-weight: normal;
-    background-color: #696969;
+    background-color: #27ae60;
 }
 
 #page-sidebar h1 i.pull-right,
@@ -1832,13 +1832,14 @@ p {
 }
 
 pre, code {
-    color: #545454;
-    background-color: #f1f1f1;
-    border: 1px solid #999;
-    font-weight: bold;
+    color: #fff;
+    background-color: #333;
+    border: 3px solid #999;
+    font-weight: bolder;
     padding: 0 6px;
     display: inline-block;
     margin-bottom: 2px;
+    text-size: 20px;
     text-indent: 0;
 }
 
@@ -2204,7 +2205,7 @@ a.text-black:focus {
 }
 
 .navbar.navbar-inverse {
-    background: #e74c3c;
+    background: #393939 url('../assets/template/bg.png') top left repeat;
 }
 
 header.navbar {
@@ -2515,7 +2516,7 @@ label,
 
 .form-control,
 .input-group {
-    margin-top: 1px;
+    margin-top: 2px;
     margin-bottom: 1px;
     -webkit-transition: none;
     -moz-transition: none;
@@ -2525,7 +2526,7 @@ label,
 }
 
 .form-control:focus {
-    border-color: #555;
+    border-color: #333;
 }
 
 .input-group .form-control,
@@ -2880,12 +2881,12 @@ table.table thead .sorting_desc_disabled {
 .btn-default.active,
 .btn-default.disabled,
 .btn-default[disabled] {
-    background-color: #ddd;
-    border-color: #ddd;
+    background-color: #27ae60;;
+    border-color: #BDF595;;
 }
 
 .btn-default {
-    background: #eee;
+    background: #BDF595;;
 }
 
 .btn-primary,
@@ -3360,7 +3361,7 @@ a.thumbnail-borderless,
 
      #page-sidebar {
         width: 100%;
-        background: #ddd;
+        background: #e74c3c;
         border: none;
         z-index: 999;
         position: relative !important;

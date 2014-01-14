@@ -1,29 +1,44 @@
-.col-md-2
-	.block.block-themed.themed-leaf
-		.block-title
-			%h4 Word Count
-.col-md-12
-%table{:cellpadding => "10"}
-%br
-- @sea.results.facets['word']["terms"].each do |f|
-	- type = f['term']  
-	%br
-	%tr
-		%td
-		.col-md-4
-			%div
-				%code 
-					= f['term']
-				%code{ :id => type, :onclick => "rohit(id); return false"  }
-					X 
-				%td
-				%strong{:margin =>"20"}     
-				= f['count']
-	%br
-//%span{:position => "relative" , :height => '20', :width => "30"}
-//%br
-//	%strong{:class => "label label-default"} User List
-//	- @out.results.each do |o|
-//		= o['handle']
-//		%br
-//%br
+.deas
+	%aside#page-sidebar
+		.sidebar-tabs-con
+			.tab-content
+				#side-tab-menu.tab-pane.active
+					%nav#primary-nav
+						%ul
+							%li
+								.block-title
+									%h4 Word Count
+							%li
+								- @sea.results.facets['word']["terms"].each do |f|
+									- type = f['term']  
+									%br
+									%tr
+										%td
+										.col-md-12
+											%div
+												%code
+													%h5 
+														= f['term']
+												%code
+													%h5{ :id => type, :onclick => "rohit(id); return false"  }
+														X 
+												%td    
+													= f['count']
+.block-content
+	= form_for :tweet, url: '/' do |f|
+		%br
+		.col-sm-3
+		.col-sm-6.text-center
+			%input#search-term.form-control{:name => "input", :placeholder => "Type here to know...", :type => :text}
+   
+		%button.btn.btn-default{:type =>"button"} FETCH!
+								
+							
+		
+	//%span{:position => "relative" , :height => '20', :width => "30"}
+	//%br
+	//	%strong{:class => "label label-default"} User List
+	//	- @out.results.each do |o|
+	//		= o['handle']
+	//		%br
+	//%br

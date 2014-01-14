@@ -1,11 +1,10 @@
-.as
-
- %br
+.block-content
  = form_for :tweet, url: '/' do |f|
   %br
   .col-sm-3
   .col-sm-6.text-center
-   %input#search-term.form-control{:name => "input", :placeholder => "Search..", :type => :text}
+   %input#search-term.form-control{:name => "input", :placeholder => "Type here to know...", :type => :text}
    
-  %button.btn.btn-default SEARCH
+  %button.btn.btn-default{:type =>"button"} FETCH!
   
+= yield
