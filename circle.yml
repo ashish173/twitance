@@ -1,3 +1,4 @@
 database:
-  post:
-    - bundle exec rake -T
+  services:
+  - mongodb
+    
