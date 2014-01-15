@@ -1,0 +1,4 @@
+database:
+  override:  
+  # - mv config/mongoid.ci.yml config/mongoid.yml
+  
