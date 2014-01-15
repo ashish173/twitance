@@ -2,3 +2,8 @@ database:
   services:
   - mongodb
     
+dependencies:
+  override:
+    - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle  --clean
+    - export RAILS_ENV="test"
+    - export RACK_ENV="test"
