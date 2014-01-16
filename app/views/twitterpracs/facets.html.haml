@@ -1,4 +1,4 @@
-.deas
+.rule
 	%aside#page-sidebar
 		.sidebar-tabs-con
 			.tab-content
@@ -6,8 +6,7 @@
 					%nav#primary-nav
 						%ul
 							%li
-								.block-title
-									%h4 Word Count
+								%h3.text-center Relevant Words
 							%li
 								- @sea.results.facets['word']["terms"].each do |f|
 									- type = f['term']  
@@ -17,28 +16,90 @@
 										.col-md-12
 											%div
 												%code
-													%h5 
-														= f['term']
-												%code
-													%h5{ :id => type, :onclick => "rohit(id); return false"  }
-														X 
+													= f['term']
+												%code{ :id => type, :onclick => "rohit(id); return false"  }
+													X 
 												%td    
 													= f['count']
-.block-content
-	= form_for :tweet, url: '/' do |f|
-		%br
-		.col-sm-3
-		.col-sm-6.text-center
-			%input#search-term.form-control{:name => "input", :placeholder => "Type here to know...", :type => :text}
-   
-		%button.btn.btn-default{:type =>"button"} FETCH!
-								
-							
-		
-	//%span{:position => "relative" , :height => '20', :width => "30"}
-	//%br
-	//	%strong{:class => "label label-default"} User List
-	//	- @out.results.each do |o|
-	//		= o['handle']
-	//		%br
-	//%br
+
+	#page-content		
+		.block-content
+			= form_for :tweet, url: '/' do |f|
+				%br
+				.col-sm-3
+				.col-sm-6.text-center
+					%input#search-term.form-control{:name => "input", :placeholder => "Type here to know...", :type => :text}
+				   
+				%button.btn.btn-default{:type =>"submit"} FETCH!
+			%br
+			.block.block-themed.block-last
+				.block-title.clearfix
+					.block-options
+						%a.btn.btn-option{"data-toggle" => "tooltip", :href => "javascript:void(0)", :title => "Search Options"}
+							%i.icon-cog
+						.btn-group
+							%a.btn.btn-option.dropdown-toggle{"data-toggle" => "dropdown", :href => "javascript:void(0)"}
+								Sort By 
+								%i.icon-angle-down
+							%ul.dropdown-menu.pull-right
+								%li.active
+									%a{:href => "javascript:void(0)"} Relevance
+								%li
+									%a{:href => "javascript:void(0)"} Proficiency
+					%h4 Search Results
+				.block-content
+					.row.row-items
+						
+						.col-md-6
+							%a.pull-left{:href => "javascript:void(0)"}
+								%img.media-object.img-circle{:alt => "Image", :src => "assets/placeholders/image_64x64_dark.png"}	
+							.media-body
+								%h4.media-heading
+									John Doe
+									%small username1
+								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"}
+									%i.icon-user
+								%a.badge.badge-info{:href => "javascript:void(0)"} Database Expert
+								%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida..
+						.col-md-6
+							%a.pull-left{:href => "javascript:void(0)"}
+								%img.media-object.img-circle{:alt => "Image", :src => "assets/placeholders/image_64x64_dark.png"}	
+							.media-body
+								%h4.media-heading
+									John Doe
+									%small username1
+								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"}
+									%i.icon-user
+								%a.badge.badge-info{:href => "javascript:void(0)"} Database Expert
+								%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida..
+					.row.row-items
+						
+						.col-md-6
+							%a.pull-left{:href => "javascript:void(0)"}
+								%img.media-object.img-circle{:alt => "Image", :src => "assets/placeholders/image_64x64_dark.png"}	
+							.media-body
+								%h4.media-heading
+									John Doe
+									%small username1
+								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"}
+									%i.icon-user
+								%a.badge.badge-info{:href => "javascript:void(0)"} Database Expert
+								%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida..
+						.col-md-6
+							%a.pull-left{:href => "javascript:void(0)"}
+								%img.media-object.img-circle{:alt => "Image", :src => "assets/placeholders/image_64x64_dark.png"}	
+							.media-body
+								%h4.media-heading
+									John Doe
+									%small username1
+								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"}
+									%i.icon-user
+								%a.badge.badge-info{:href => "javascript:void(0)"} Database Expert
+								%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida..
+
+
+
+
+
+
+					//and so on....

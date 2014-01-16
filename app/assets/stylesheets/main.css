@@ -194,11 +194,10 @@ body {
 }
 
 #page-container {
-    width: 95%;
+    width: 100%;
     min-width: 320px;
     max-width: 1920px;
-    margin: 0 auto;
-    background-color: #595959;
+    background-color: #F2F4F7;
 }
 
 #page-container.full-width {
@@ -209,7 +208,7 @@ body {
     width: 201px;
     display: block;
     position: absolute;
-    border-right: 0px solid #333;
+    border-right: 1px solid #333;
 }
 
 #pre-page-content {
@@ -2881,12 +2880,12 @@ table.table thead .sorting_desc_disabled {
 .btn-default.active,
 .btn-default.disabled,
 .btn-default[disabled] {
-    background-color: #27ae60;;
-    border-color: #BDF595;;
+    background-color: #cc8f3f;;
+    border-color: #f39c12;;
 }
 
 .btn-default {
-    background: #BDF595;;
+    background: #f39c12;;
 }
 
 .btn-primary,
