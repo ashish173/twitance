@@ -43,28 +43,13 @@ class TwitancesController < ApplicationController
       		end
 			#facet('word') {}
 		end
-
-		if @sea
-			p "sae exists "
-			p "#{@sea.facets['word']['terms'][0]['term']}"
-			p "#{@sea.facets['word']['terms'][0]['count']}"
-		else
-			p "try hasd "
-		end		
 	end
 	#hitting the twitter
 
 	def download(q)
-		@client = Twitter::REST::Client.new do |config|
-  			config.consumer_key        = "kgIpenTTZcD7wD9dnOOxPQ"
-  			config.consumer_secret     = "hHWxrOaZ3e1P9q44q6t0tNLvHZXucKETg2CGuchsmRc"
-			config.access_token        = "838203445-AOC6HFdUCZfAswXKVQQpdyCJImHoloyFVr1qZVSd"
-  			config.access_token_secret = "v93GUHb2zoR8bNYzrN81Ns36hzaC8KgBTYGO3cGM"
-  		end	
+			
   		@options = {:count => "100"}  
   		p "in the download"+ q
-		#@obj = @client.search(q, @options)
-
 		token 		= "838203445-AOC6HFdUCZfAswXKVQQpdyCJImHoloyFVr1qZVSd"
 		token_secret = "v93GUHb2zoR8bNYzrN81Ns36hzaC8KgBTYGO3cGM"
 
