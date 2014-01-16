@@ -1,0 +1,45 @@
+.deas
+	%aside#page-sidebar
+		.sidebar-tabs-con
+			.tab-content
+				#side-tab-menu.tab-pane.active
+					%nav#primary-nav
+						%ul
+							%li
+								.block-title
+									%h4 Word Count
+							%li
+								- @sea.results.facets['word']["terms"].each do |f|
+									- type = f['term']  
+									%br
+									%tr
+										%td
+										.col-md-12
+											%div
+												%code
+													= f['term']
+												%code{ :id => type, :onclick => "rohit(id); return false"  }
+													X 
+												%td    
+													= f['count']
+.block-content
+	= form_for :tweet, url: '/' do |f|
+		%br
+		.col-sm-3
+		.col-sm-6.text-center
+			%input#search-term.form-control{:name => "input", :placeholder => "Type here to know...", :type => :text}
+   
+		%button.btn.btn-default{:type =>"submit"} FETCH!
+								
+							
+	.col-md-3	
+	%div{:class => "block block-themed "}
+		//%br
+		%div{:class => "block-title"}
+			%h4 User List
+		- @out.results.each do |o|
+			= o['handle']
+			%hr
+			= o['friends']
+			
+		//%br
