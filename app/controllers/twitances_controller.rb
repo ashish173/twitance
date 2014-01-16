@@ -47,9 +47,6 @@ class TwitancesController < ApplicationController
 	#hitting the twitter
 
 	def download(q)
-			
-  		@options = {:count => "100"}  
-  		p "in the download"+ q
 		token 		= "838203445-AOC6HFdUCZfAswXKVQQpdyCJImHoloyFVr1qZVSd"
 		token_secret = "v93GUHb2zoR8bNYzrN81Ns36hzaC8KgBTYGO3cGM"
 
