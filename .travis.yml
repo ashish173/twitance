@@ -11,7 +11,9 @@ branches:
   -master
   -development
 matrix:
+ allow_failures:
+  -rvm: ruby-head
+  -env: RGV=master
  include:
   -rvm: 1.9.3
   -env: v1.8.23
-
