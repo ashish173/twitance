@@ -3,7 +3,7 @@ install: true
 language: ruby
 rvm:
  - 1.9.3p194
-env: 
+env:
  -RGV=master
  -RGV=v1.8.23
 branches:
@@ -13,5 +13,5 @@ branches:
 matrix:
 include:
   -rvm: 1.9.3
-  -env: v1.8.23	
+  -env: v1.8.23
 
