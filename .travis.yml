@@ -2,16 +2,16 @@ services: mongodb
 install: true
 language: ruby
 rvm:
-	- 1.9.3p194
+ - 1.9.3p194
 env: 
-	-RGV=master
-	-RGV=v1.8.23
+ -RGV=master
+ -RGV=v1.8.23
 branches:
  only:
-	-master
-	-development
+  -master
+  -development
 matrix:
  include:	
-	-rvm: 1.9.3
-	-env: v1.8.23	
+  -rvm: 1.9.3
+  -env: v1.8.23	
 
