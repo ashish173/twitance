@@ -5,7 +5,6 @@ class TwitancesController < ApplicationController
 		render "new"
 	end
 
-
 	def create 
 		@tweet = Twitance.new(params[:tweet])
 		@tweet.save
@@ -27,9 +26,6 @@ class TwitancesController < ApplicationController
 			query{string 'rohit'}#, fuzziness: 0.5} 
 		end
 		
-		@user.results.each do |f|
-			p f['profile_image_url']
-		end
 	end
 
 	def show
@@ -69,10 +65,9 @@ class TwitancesController < ApplicationController
 			store_data['followers'] 	= t['user']['followers_count']
 			store_data['friends'] 		= t['user']['friends_count']
 			store_data['verified'] 		= t['user']['verified']
-			
+			store_data['profile_image_url']				= t['user']['profile_image_url']
 			results.push(store_data)
 		end
-
 		#indexing tweets
 		Tire.index 'twitances' do
       		delete
@@ -99,7 +94,7 @@ class TwitancesController < ApplicationController
             			:followers			=> {:type 	=> 'integer'},
             			:friends			=> {:type 	=> 'integer'},
             			:name 				=> {:type 	=> 'string'},
-            			
+            			:profile_image_url	=> {:type 	=> 'string'},
              			:description		=> {:type 	=> 'string', :analyzer => 'twitance_analyzer'},
             			:verified 			=> {:type 	=> 'boolean'},
             			:tweet  			=> { :type => 'string', :analyzer => 'twitance_analyzer'}

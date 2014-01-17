@@ -52,17 +52,18 @@
 					- @user.results.each do |f|	
 						.col-md-6
 							%a.pull-left{:href => "javascript:void(0)"}
-								/%img.media-object.img-circle{:alt => "Image", :src => /= f['profile_image_url']/}	
+								- link = f['profile_image_url']
+								%img.media-object.img-circle{:alt => "Image", :src => link}	
 							.media-body
 								%h4.media-heading
 									= f['name']
 									%small 
 										= f["handle"]
-								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"} 									
+								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"} 	
+									= f['friends'] 								
 									%i.icon-user
 								%a.badge.badge-info{:href => "javascript:void(0)"}
-									Twitter
+									= f['followers'] 
 								%p
 									= f['description']
 							%br
-						
