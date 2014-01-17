@@ -49,57 +49,20 @@
 					%h4 Search Results
 				.block-content
 					.row.row-items
+					- @user.results.each do |f|	
+						.col-md-6
+							%a.pull-left{:href => "javascript:void(0)"}
+								/%img.media-object.img-circle{:alt => "Image", :src => /= f['profile_image_url']/}	
+							.media-body
+								%h4.media-heading
+									= f['name']
+									%small 
+										= f["handle"]
+								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"} 									
+									%i.icon-user
+								%a.badge.badge-info{:href => "javascript:void(0)"}
+									Twitter
+								%p
+									= f['description']
+							%br
 						
-						.col-md-6
-							%a.pull-left{:href => "javascript:void(0)"}
-								%img.media-object.img-circle{:alt => "Image", :src => "assets/placeholders/image_64x64_dark.png"}	
-							.media-body
-								%h4.media-heading
-									John Doe
-									%small username1
-								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"}
-									%i.icon-user
-								%a.badge.badge-info{:href => "javascript:void(0)"} Database Expert
-								%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida..
-						.col-md-6
-							%a.pull-left{:href => "javascript:void(0)"}
-								%img.media-object.img-circle{:alt => "Image", :src => "assets/placeholders/image_64x64_dark.png"}	
-							.media-body
-								%h4.media-heading
-									John Doe
-									%small username1
-								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"}
-									%i.icon-user
-								%a.badge.badge-info{:href => "javascript:void(0)"} Database Expert
-								%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida..
-					.row.row-items
-						
-						.col-md-6
-							%a.pull-left{:href => "javascript:void(0)"}
-								%img.media-object.img-circle{:alt => "Image", :src => "assets/placeholders/image_64x64_dark.png"}	
-							.media-body
-								%h4.media-heading
-									John Doe
-									%small username1
-								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"}
-									%i.icon-user
-								%a.badge.badge-info{:href => "javascript:void(0)"} Database Expert
-								%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida..
-						.col-md-6
-							%a.pull-left{:href => "javascript:void(0)"}
-								%img.media-object.img-circle{:alt => "Image", :src => "assets/placeholders/image_64x64_dark.png"}	
-							.media-body
-								%h4.media-heading
-									John Doe
-									%small username1
-								%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"}
-									%i.icon-user
-								%a.badge.badge-info{:href => "javascript:void(0)"} Database Expert
-								%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida..
-
-
-
-
-
-
-					//and so on....
