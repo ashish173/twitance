@@ -1,6 +1,7 @@
 class TwitancesController < ApplicationController
 	require 'twitter'
 	require 'tire'
+	$variable
 	def new
 		render "new"
 	end
@@ -14,18 +15,20 @@ class TwitancesController < ApplicationController
 
 
 	def facets
-		@par = params[:term]
-		
+		#par = params[:term]
+		@root=params[:tweet]
 		@sea = Tire.search 'twitances' do
 			    facet 'word', :global => true do
         			terms :tweet
       			end
 		end
-		
+		p @root
 		@user = Tire.search 'twitances' do
-			query{string 'rohit'}#, fuzziness: 0.5} 
+			query do
+				string 'rahul'
+			end
+			#query {string 'rahul'}#, fuzziness: 0.5}  '#{}' 
 		end
-		
 	end
 
 	def show
@@ -49,13 +52,13 @@ class TwitancesController < ApplicationController
 		token 		= "838203445-AOC6HFdUCZfAswXKVQQpdyCJImHoloyFVr1qZVSd"
 		token_secret = "v93GUHb2zoR8bNYzrN81Ns36hzaC8KgBTYGO3cGM"
 
-		obj = Rohit.new(token, token_secret)
+		key = TwitterAccess.new(token, token_secret)
 
-		@tweet_obj =  obj.get(q, 100)
+		@tweet_key =  key.get(q, 100)
 		#creating arrays of username, tweets
 		results = []
 		#@obj = @obj.to_a
-		@tweet_obj.each do |t|
+		@tweet_key.each do |t|
 			store_data = {}
 			store_data['type'] 			= "twitance"
 			store_data['handle'] 		= t['user']['screen_name']
@@ -68,41 +71,9 @@ class TwitancesController < ApplicationController
 			store_data['profile_image_url']				= t['user']['profile_image_url']
 			results.push(store_data)
 		end
-		#indexing tweets
+		%x[rake did]
 		Tire.index 'twitances' do
-      		delete
 
-      		create :settings => {
-	            :index => {
-    	          :analysis => {
-        	        :analyzer => {
-            	      :twitance_analyzer => {
-                	    :type => 'snowball',
-                    	:tokenizer => 'snowball',
-                    	:language => 'English',
-                    	:stopwords_path => '/stop.txt'
-                    	#:stopwords => ['is', 'rt', 'you', 'to', 'the' , 't.co', 'me', 'http', 'https']
-                 	 }
-                	}
-              	}
-            	}
-          	},
-          	:mappings => {
-        		:twitance => {
-          			:properties => {    
-            			:handle   		  	=> { :type => 'string'},
-            			:followers			=> {:type 	=> 'integer'},
-            			:friends			=> {:type 	=> 'integer'},
-            			:name 				=> {:type 	=> 'string'},
-            			:profile_image_url	=> {:type 	=> 'string'},
-             			:description		=> {:type 	=> 'string', :analyzer => 'twitance_analyzer'},
-            			:verified 			=> {:type 	=> 'boolean'},
-            			:tweet  			=> { :type => 'string', :analyzer => 'twitance_analyzer'}
-        			}
-      	  		}
-      		}
-    	end
-		Tire.index 'twitances' do
 			import results
 			refresh
 		end
@@ -112,13 +83,13 @@ class TwitancesController < ApplicationController
 		@q = params[:input]
 		if @q
 			download(@q)	
-			redirect_to '/facets' 
+			redirect_to '/facets'
 		end
 	end
 end
 
 
-class Rohit
+class TwitterAccess
 	require 'faraday_middleware'
 	attr_reader :token, :secret
 
