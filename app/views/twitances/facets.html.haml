@@ -8,7 +8,7 @@
 							%li
 								%h3.text-center Relevant Words
 							%li
-								- @sea.results.facets['word']["terms"].each do |f|
+								- @sea.results.facets['word']['terms'].each do |f|
 									- type = f['term']  
 									%br
 									%tr
@@ -17,14 +17,13 @@
 											%div
 												%code
 													= f['term']
-												%code{ :id => type, :onclick => "rohit(id); return false"  }
+													%b{ :id => type, :onclick => "rohit(id); return false"  }
 													X 
-												%td    
-													= f['count']
+									
 
 	#page-content		
 		.block-content
-			= form_for :tweet, url: '/' do |f|
+			= form_for :tweet, url: '/search' do |f|
 				%br
 				.col-sm-3
 				.col-sm-6.text-center
@@ -50,7 +49,7 @@
 				.block-content
 					- @user.results.each do |f|	
 						.row.row-items
-							.col-md-6
+							.col-md-6{:style => "width: 400px"}
 								%a.pull-left{:href => "javascript:void(0)"}
 									- link = f['profile_image_url']
 									%img.media-object.img-circle{:alt => "Image", :src => link}	
@@ -59,13 +58,13 @@
 										= f['name']
 										%small 
 											= f["handle"]
-										%b		
-											= f['friends'] 
-										%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"} 	
-											Following								
-											%i.icon-user
-										%b
-											= f['followers']
+									%b		
+										= f['friends'] 
+									%a.badge.badge-success{"data-toggle" => "tooltip", :href => "page_user_profile.html", :title => "Profile"} 	
+										Following								
+										%i.icon-user
+									%b
+										= f['followers']
 										%a.badge.badge-info{:href => "javascript:void(0)"}
 											Followers
 									%p

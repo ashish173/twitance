@@ -1,7 +1,7 @@
 class TwitancesController < ApplicationController
 	require 'twitter'
 	require 'tire'
-	$variable
+
 	def new
 		render "new"
 	end
@@ -15,19 +15,14 @@ class TwitancesController < ApplicationController
 
 
 	def facets
-		#par = params[:term]
-		@root=params[:tweet]
 		@sea = Tire.search 'twitances' do
 			    facet 'word', :global => true do
         			terms :tweet
       			end
 		end
-		p @root
+		
 		@user = Tire.search 'twitances' do
-			query do
-				string 'rahul'
-			end
-			#query {string 'rahul'}#, fuzziness: 0.5}  '#{}' 
+			query {string 'rahul'}#, fuzziness: 0.5}  '#{}' 
 		end
 	end
 
@@ -49,10 +44,11 @@ class TwitancesController < ApplicationController
 	#hitting the twitter
 
 	def download(q)
-		token 		= "838203445-AOC6HFdUCZfAswXKVQQpdyCJImHoloyFVr1qZVSd"
-		token_secret = "v93GUHb2zoR8bNYzrN81Ns36hzaC8KgBTYGO3cGM"
 
-		key = TwitterAccess.new(token, token_secret)
+		token_first = APP_CONFIG['KEY']
+		token_take = APP_CONFIG['SECRET_KEY']
+
+		key = TwitterAccess.new(token_first, token_take)
 
 		@tweet_key =  key.get(q, 100)
 		#creating arrays of username, tweets
@@ -71,7 +67,7 @@ class TwitancesController < ApplicationController
 			store_data['profile_image_url']				= t['user']['profile_image_url']
 			results.push(store_data)
 		end
-		%x[rake did]
+		%x[rake mapping]
 		Tire.index 'twitances' do
 
 			import results
@@ -81,6 +77,7 @@ class TwitancesController < ApplicationController
 
 	def search
 		@q = params[:input]
+		session[:input]=params[:input]
 		if @q
 			download(@q)	
 			redirect_to '/facets'
@@ -137,4 +134,5 @@ class TwitterAccess
 	def consumer_secret
 		return "hHWxrOaZ3e1P9q44q6t0tNLvHZXucKETg2CGuchsmRc"
 	end
+	
 end

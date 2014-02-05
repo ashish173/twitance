@@ -1,8 +1,6 @@
-task :did do	    
-  #indexing tweets
-	Tire.index 'twitances' do
-    delete
-
+task :mapping do
+	Tire.index 'twitances'  do
+    delete 
   	create :settings => {
       :index => {
         :analysis => {

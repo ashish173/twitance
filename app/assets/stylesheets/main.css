@@ -197,7 +197,7 @@ body {
     width: 100%;
     min-width: 320px;
     max-width: 1920px;
-    background-color: #F2F4F7;
+    background-color: #fff;
 }
 
 #page-container.full-width {
@@ -461,7 +461,7 @@ footer {
     list-style: none;
     margin: 0;
     padding: 0;
-    background-color: #F2F4F7;
+    background-color: #fff;
 }
 
 #primary-nav li a {
@@ -840,7 +840,7 @@ footer {
 }
 
 .sidebar-tabs-con .tab-content {
-    background-color: #F2F4F7;
+    background-color: #fff;
     padding: 20px 0 10px;
     margin: 0;
     border: none;
