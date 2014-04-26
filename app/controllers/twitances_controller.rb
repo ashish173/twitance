@@ -15,17 +15,47 @@ class TwitancesController < ApplicationController
 
 
 	def facets
+    inpu = session[:pass]
+   
 		@sea = Tire.search 'twitances' do
+         # query {string 'AAP'}
+        
+          query do
+            match [:tweet, :description, :name], inpu
+            p '-------------------'
+            p @inpu.to_s
+          """
+            multi_match do
+              string 'AAP'
+              fields ['tweet', 'description']
+            end
+            string 'tweet:AAP'#session[:pass]  
+            string 'description:AAiP'"""
+          end
+          size 1000 
 			    facet 'word', :global => true do
-        			terms :tweet
-      			end
+        			terms :tweet   #,:description
+      		end
+          """
+          facet('multi'){ terms ['tweet' , 'description']}
+          """
 		end
-		
+    count = 0
+    @sea.results.each do 
+      count = count + 1
+    end
+    p "==============================="
+    p count
+		value=session[:pass]
+    p "---------------------------------"
+    p value
 		@user = Tire.search 'twitances' do
-			query {string 'rahul'}#, fuzziness: 0.5}  '#{}' 
+			query do
+				string value
+			end 
 		end
 	end
-
+  
 	def show
 		@tweet = Twitance.find(params[:id])
 		if @tweet
@@ -36,7 +66,7 @@ class TwitancesController < ApplicationController
 
 		@sea = Twitance.search do 
 			facet 'word', :global => true do
-        		terms :tweet
+        		terms :tweet,:description
       		end
 			#facet('word') {}
 		end
@@ -77,7 +107,7 @@ class TwitancesController < ApplicationController
 
 	def search
 		@q = params[:input]
-		session[:input]=params[:input]
+		session[:pass]=params[:input]
 		if @q
 			download(@q)	
 			redirect_to '/facets'

@@ -18,7 +18,7 @@
 												%code
 													= f['term']
 													%b{ :id => type, :onclick => "rohit(id); return false"  }
-													X 
+														X 
 									
 
 	#page-content		
@@ -47,7 +47,7 @@
 									%a{:href => "javascript:void(0)"} Proficiency
 					%h4 Search Results
 				.block-content
-					- @user.results.each do |f|	
+					- @sea.results.each do |f|	
 						.row.row-items
 							.col-md-6{:style => "width: 400px"}
 								%a.pull-left{:href => "javascript:void(0)"}
