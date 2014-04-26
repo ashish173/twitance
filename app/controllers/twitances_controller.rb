@@ -14,7 +14,7 @@ class TwitancesController < ApplicationController
 
 
   def facets
-    inpu = 'ruby' #params[:term]
+    inpu =  params[:q]
     p "---------->" + inpu
     @sea=Tire.search 'twitances' do
       query do
@@ -126,7 +126,7 @@ end
     @q = params[:input]
     if @q
       download(@q)	
-      redirect_to '/facets' 
+      redirect_to '/facets?q='+@q 
     end
   end
 end
