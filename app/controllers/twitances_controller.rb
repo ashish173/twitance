@@ -18,13 +18,20 @@ class TwitancesController < ApplicationController
     p "---------->" + inpu
     @sea=Tire.search 'twitances' do
       query do
-        match [:tweet, :description, :name], inpu #'python'
-      end
-      size 1000
+        match [:tweet, :description], inpu #'python'
 
-      facet 'word', :global => true do
-        terms :tweet
+        """multi_match do
+          string inpu
+          fields ['tweet', 'description']
+        end"""
       end
+      size 100
+      
+      #facet('multi'){ terms ['tweet' , 'description']}
+      facet 'word', :global => true do
+        terms [:tweet, :description, :name]
+      end
+      
     end
 
 
@@ -81,6 +88,13 @@ def download(q)
     store_data['profile_image_url']				= t['user']['profile_image_url']
     results.push(store_data)
   end
+  c =0
+  results.each do |r|
+    p r['handle']
+    c+=1
+  end
+  p c
+
     #indexing tweets
   Tire.index 'twitances' do
     delete
@@ -106,7 +120,7 @@ def download(q)
           :handle   	  => { :type => 'string'},
           :followers	  => {:type 	=> 'integer'},
           :friends	  => {:type 	=> 'integer'},
-          :name 		  => {:type 	=> 'string'},
+          :name 	  => {:type 	=> 'string', :analyzer => 'twitance_analyzer'},
           :profile_image_url=> {:type 	=> 'string'},
           :description      => {:type=> 'string', :analyzer => 'twitance_analyzer'},
           :verified 	  => {:type 	=> 'boolean'},
