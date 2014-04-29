@@ -14,11 +14,16 @@ class TwitancesController < ApplicationController
 
 
   def facets
-    inpu =  params[:q]
+    inpu =  params[:term]
     p "---------->" + inpu
+    test = 'tags:' + inpu
     @sea=Tire.search 'twitances' do
       query do
-        match [:tweet, :description], inpu #'python'
+        boolean do
+          must_not {string test}
+        end
+    
+        #match [:tweet, :description], inpu #'python'
 
         """multi_match do
           string inpu
@@ -140,7 +145,7 @@ end
     @q = params[:input]
     if @q
       download(@q)	
-      redirect_to '/facets?q='+@q 
+      redirect_to '/facets?term='+@q 
     end
   end
 end

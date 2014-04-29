@@ -14,7 +14,8 @@
                     %tr
                       %td
                         .col-md-12
-                          %div
+                          %div   
+                            %a{href: '?term=' + type}
                             %code
                               = f['term']
                               %code{ :id => type, :onclick => "rohit(id); return false"  }
@@ -46,7 +47,7 @@
                 %li
                   %a{:href => "javascript:void(0)"} Proficiency
           %h4 Search Results
-        .block-content
+        .block-content#user_profile
           .row.row-items
             - @sea.results.each do |f|	
               .col-md-6

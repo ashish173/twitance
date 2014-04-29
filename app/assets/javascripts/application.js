@@ -26,9 +26,11 @@ function rohit(id)
 	xmlhttp.onreadystatechange=function()
 	{
 		if(xmlhttp.readyState==4 && xmlhttp.status==200)
-			document.getElementById(id).innerHTML=xmlhttp.responseText;
+                {
+			//document.getElementById('user_profile').innerHTML=xmlhttp.responseText;
+                  //window.open("www.localhost:3000?term="+id);
+                }
 	}
 	xmlhttp.open("GET","facets?term=" + id,true);
 	xmlhttp.send();
-	alert(id)
 }
