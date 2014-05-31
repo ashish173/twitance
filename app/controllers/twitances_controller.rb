@@ -12,17 +12,19 @@ class TwitancesController < ApplicationController
     #render text: params[:tweet].inspect
   end
 
-
   def facets
     @inpu =  params[:term]
-    filter_key = "a"
-    if @inpu == nil   # for user filter queries
-      filter_key = params[:q]  # which are passed a q parameters
+    filter_key = params[:q]
+    if filter_key == nil   # for user filter queries
+      filter_key = "a"                                                                                                   
     end
     
     search_key = @inpu
     # test = 'tags:' + inpu
     
+    p "main word #{search_key}"
+    p "filter_key #{filter_key}"
+
     @sea=Tire.search 'twitances' do
       query do
         match [:tweet, :description], search_key #'python'
@@ -30,24 +32,34 @@ class TwitancesController < ApplicationController
 
       query do
         boolean do
+          must_not { string "description:#{filter_key}" }
+          must_not { string "tweet:#{filter_key}" }                                                                                                                                                                                        #{filter_key}" }
+          must_not { string "handle:#{filter_key}" }  
+        end  
+      end
+      
+      size 1000  # for thousand tweets
+                                                                                
+      facet 'word', :global => true do
+        terms :tweet  
+      end
+    end
+
+    @user = Tire.search 'twitances' do
+      query do
+        match [:tweet, :description], search_key #'python'
+      end
+
+      query do
+        boolean do
           must_not { string "description:#{filter_key}" }  
+          must_not { string "tweet:#{filter_key}" }
+          must_not { string "handle:#{filter_key}" }
         end  
       end
       
       size 1000  # for thousand tweets
       
-      facet 'word', :global => true do
-        terms :tweet  
-      end
-
-
-
-    end
-
-    @user = Tire.search 'twitances' do
-      query do
-        string @inpu #, fuzziness: 0.5} 
-      end
     end
   end
 
