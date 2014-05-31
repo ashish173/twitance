@@ -15,43 +15,30 @@ class TwitancesController < ApplicationController
 
   def facets
     inpu =  params[:term]
-    p "---------->" + inpu
+    if inpu == nil   # for user filter queries
+      inpu = params[:q]  # which are passed a q parameters
+    end
+    
     test = 'tags:' + inpu
+    
     @sea=Tire.search 'twitances' do
       query do
         boolean do
           must_not {string test}
         end
-    
-        #match [:tweet, :description], inpu #'python'
-
-        """multi_match do
-          string inpu
-          fields ['tweet', 'description']
-        end"""
       end
       size 100
-      
       #facet('multi'){ terms ['tweet' , 'description']}
       facet 'word', :global => true do
         terms [:tweet, :description, :name]
       end
-      
     end
-
 
     @user = Tire.search 'twitances' do
       query do
         string inpu #, fuzziness: 0.5} 
       end
     end
-    count = 0
-    @user.results.each do 
-      count = count + 1
-    end
-     p "==============================="
-    p count
-    #p @sea.results.facets['word']["terms"].fit
   end
 
   def show
