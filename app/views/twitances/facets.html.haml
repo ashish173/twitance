@@ -6,16 +6,19 @@
           %nav#primary-nav
             %ul
               %li
+                %li
+                  - subject = @inpu
                 %h3.text-center Relevant Words
                 %li
                   - @sea.results.facets['word']["terms"].each do |f|
-                    - type = f['term']  
+                    - type = f['term']
+
                     %br
                     %tr
                       %td
                         .col-md-12
                           %div   
-                            %a{href: '?q=' + type}
+                            %a{href: '?q=' + type + "&term=" + subject }
                             %code
                               = f['term']
                               %code{ :id => type, :onclick => "rohit(id); return false"  }
@@ -23,13 +26,13 @@
                                 %td                                      
                                   = f['count']
 
-  #page-content		
+  #page-content   
     .block-content
       = form_for :tweet, url: '/' do |f|
         %br
         .col-sm-3
         .col-sm-6.text-center
-          %input#search-term.form-control{:name => "input", :placeholder => "Type here to know...", :type => :text}				   
+          %input#search-term.form-control{:name => "input", :placeholder => "Type here to know...", :type => :text}          
         %button.btn.btn-default{:type =>"submit"} FETCH!
       %br
       .block.block-themed.block-last
@@ -49,7 +52,7 @@
           %h4 Search Results
         .block-content#user_profile
           .row.row-items
-            - @sea.results.each do |f|	
+            - @sea.results.each do |f|  
               .col-md-6
                 .media.media-hover
                   %a.pull-left{href: "javascript:void(0)"}

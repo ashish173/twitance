@@ -14,29 +14,39 @@ class TwitancesController < ApplicationController
 
 
   def facets
-    inpu =  params[:term]
-    if inpu == nil   # for user filter queries
-      inpu = params[:q]  # which are passed a q parameters
+    @inpu =  params[:term]
+    filter_key = "a"
+    if @inpu == nil   # for user filter queries
+      filter_key = params[:q]  # which are passed a q parameters
     end
     
-    test = 'tags:' + inpu
+    search_key = @inpu
+    # test = 'tags:' + inpu
     
     @sea=Tire.search 'twitances' do
       query do
+        match [:tweet, :description], search_key #'python'
+      end
+
+      query do
         boolean do
-          must_not {string test}
-        end
+          must_not { string "description:#{filter_key}" }  
+        end  
       end
-      size 100
-      #facet('multi'){ terms ['tweet' , 'description']}
+      
+      size 1000  # for thousand tweets
+      
       facet 'word', :global => true do
-        terms [:tweet, :description, :name]
+        terms :tweet  
       end
+
+
+
     end
 
     @user = Tire.search 'twitances' do
       query do
-        string inpu #, fuzziness: 0.5} 
+        string @inpu #, fuzziness: 0.5} 
       end
     end
   end

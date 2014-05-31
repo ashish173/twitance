@@ -1,0 +1,38 @@
+@sea =Tire.search 'twitances' do
+      query do
+        match [:tweet, :description, :name], inpu #'python'
+      end
+      size 1000
+
+      facet 'word', :global => true do
+        terms :tweet
+      end
+    end
+
+
+
+
+    users_list.each do |user| 
+      facets_list.each do |word|
+        @search = Tire.search 'twitances' do
+          query do
+            boolean do
+              must { string "handle:#{user}" }
+              must { string "description:#{word}" }
+            end 
+          end  
+        end # end of search query 
+        if @search.results.size > 0
+          # @user_word.each do |object|
+           # if object["word"] == "#{word}"
+           #   object["user_list"].push("#{user}")
+           # end
+          #end
+          
+           # col = 
+             @user_word["#{word}"].push("#{user}") # append to arry
+        end
+        
+      end # end of facets_list loop
+    end # end of users_list loop
+    
