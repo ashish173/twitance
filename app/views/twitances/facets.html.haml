@@ -8,7 +8,7 @@
               %li
                 %li
                   - subject = @inpu
-                %h3.text-center Relevant Words
+                %h4.text Click Words to Filter Results
                 %li
                   - @sea.results.facets['word']["terms"].each do |f|
                     - type = f['term']
@@ -19,13 +19,8 @@
                         .col-md-12
                           %div   
                             %a{href: '?q=' + type + "&term=" + subject }
-                            %code
-                              = f['term']
-                              %code{ :id => type, :onclick => "rohit(id); return false"  }
-                                X 
-                                %td                                      
-                                  = f['count']
-
+                              %code
+                                = f['term']
   #page-content   
     .block-content
       = form_for :tweet, url: '/' do |f|

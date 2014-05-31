@@ -1,6 +1,8 @@
 class TwitancesController < ApplicationController
   require 'twitter'
   require 'tire'
+  @@filter_array = []  # to store presistent filter info 
+
   def new
     render "new"
   end
@@ -15,8 +17,9 @@ class TwitancesController < ApplicationController
   def facets
     @inpu =  params[:term]
     filter_key = params[:q]
+    @@filter_array.push(filter_key)
     if filter_key == nil   # for user filter queries
-      filter_key = "a"                                                                                                   
+      filter_key = "a"     # temporary filter                                                                                              
     end
     
     search_key = @inpu
